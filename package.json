@@ -7,7 +7,13 @@
     "build": "ng build --prod --base-href https://stovt.github.io/angular-twitter/",
     "test": "ng test",
     "lint": "ng lint",
+    "tslint": "tslint",
     "e2e": "ng e2e"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "private": true,
   "dependencies": {
@@ -33,6 +39,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.2.1",
+    "husky": "^3.0.5",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
@@ -40,9 +47,13 @@
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "lint-staged": "^8.1.5",
+    "ng-lint-staged": "^0.1.6",
+    "prettier": "^1.18.2",
     "protractor": "~5.3.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "~2.7.2"
   }
 }
