@@ -4,7 +4,7 @@ set -e
 
 npm run build
 
-cd dist
+cd dist/angular-twitter
 
 git init
 git add -A
