@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  formData;
+  formData: FormGroup;
 
   constructor() {}
 
@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  onSubmit(data) {
-    console.log(1, this.formData, data);
+  onSubmit(data: { email: string; password: string }) {
+    console.log(data);
   }
 }

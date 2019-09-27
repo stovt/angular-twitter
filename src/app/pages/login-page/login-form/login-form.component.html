@@ -14,7 +14,7 @@
       />
       <div
         *ngIf="
-          formData.get('email').errors?.required &&
+          formData.get('email').hasError('required') &&
           (formData.get('email').touched || formData.get('email').dirty)
         "
         class="invalid-feedback"
@@ -23,7 +23,7 @@
       </div>
       <div
         *ngIf="
-          formData.get('email').errors?.email &&
+          formData.get('email').hasError('email') &&
           (formData.get('email').touched || formData.get('email').dirty)
         "
         class="invalid-feedback"
@@ -45,7 +45,7 @@
       />
       <div
         *ngIf="
-          formData.get('password').errors?.required &&
+          formData.get('password').hasError('required') &&
           (formData.get('password').touched || formData.get('password').dirty)
         "
         class="invalid-feedback"
