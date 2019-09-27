@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ComponentsModule } from '../components/components.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginPageModule } from './login-page/login-page.module';
@@ -19,7 +21,7 @@ import { UsersPageComponent } from './users-page/users-page.component';
     UserPageComponent,
     UsersPageComponent
   ],
-  imports: [LoginPageModule, RegisterPageModule],
+  imports: [CommonModule, ComponentsModule, LoginPageModule, RegisterPageModule],
   exports: [HomePageComponent, LoginPageComponent]
 })
 export class PagesModule {}

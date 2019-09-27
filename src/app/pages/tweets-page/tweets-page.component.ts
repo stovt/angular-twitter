@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../api/api.service';
 
 @Component({
   selector: 'app-tweets-page',
@@ -6,7 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tweets-page.component.css']
 })
 export class TweetsPageComponent implements OnInit {
-  constructor() {}
+  loading = false;
+  error: string;
+  tweets = [];
 
-  ngOnInit() {}
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.loading = true;
+    this.apiService.getAllTweets().subscribe(
+      data => {
+        this.tweets = data.tweets;
+        this.loading = false;
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      }
+    );
+  }
 }
