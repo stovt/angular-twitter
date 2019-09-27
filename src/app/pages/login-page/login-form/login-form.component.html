@@ -1,0 +1,61 @@
+<div>
+  <form [formGroup]="formData" (ngSubmit)="onSubmit(formData.value)">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        name="email"
+        formControlName="email"
+        class="form-control"
+        [class.is-invalid]="
+          !formData.get('email').valid &&
+          (formData.get('email').touched || formData.get('email').dirty)
+        "
+      />
+      <div
+        *ngIf="
+          formData.get('email').errors?.required &&
+          (formData.get('email').touched || formData.get('email').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The email field is required
+      </div>
+      <div
+        *ngIf="
+          formData.get('email').errors?.email &&
+          (formData.get('email').touched || formData.get('email').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The email field must be a valid email
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        formControlName="password"
+        class="form-control"
+        [class.is-invalid]="
+          !formData.get('password').valid &&
+          (formData.get('password').touched || formData.get('password').dirty)
+        "
+      />
+      <div
+        *ngIf="
+          formData.get('password').errors?.required &&
+          (formData.get('password').touched || formData.get('password').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The password field is required
+      </div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" [disabled]="!formData.valid">Login</button>
+      <a routerLink="/register" class="btn btn-link">Register</a>
+    </div>
+  </form>
+</div>
