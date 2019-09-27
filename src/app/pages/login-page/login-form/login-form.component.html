@@ -8,7 +8,7 @@
         formControlName="email"
         class="form-control"
         [class.is-invalid]="
-          !formData.get('email').valid &&
+          formData.get('email').invalid &&
           (formData.get('email').touched || formData.get('email').dirty)
         "
       />
@@ -39,7 +39,7 @@
         formControlName="password"
         class="form-control"
         [class.is-invalid]="
-          !formData.get('password').valid &&
+          formData.get('password').invalid &&
           (formData.get('password').touched || formData.get('password').dirty)
         "
       />
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="form-group">
-      <button class="btn btn-primary" [disabled]="!formData.valid">Login</button>
+      <button class="btn btn-primary" [disabled]="formData.invalid">Login</button>
       <a routerLink="/register" class="btn btn-link">Register</a>
     </div>
   </form>
