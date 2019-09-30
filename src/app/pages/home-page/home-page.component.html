@@ -1,3 +1,20 @@
-<p>
-  home-page works!
-</p>
+<div>
+  <div *ngIf="user">
+    <h3>
+      Hi, <b>{{ user.firstName + ' ' + user.lastName }}</b
+      >!
+    </h3>
+    <p>You're logged in with Vue + Vuex & JWT!!</p>
+  </div>
+  <h5 *ngIf="!user" class="text-center">
+    <a routerLink="/login" class="btn-link">Sign In</a> or
+    <a routerLink="/register" class="btn-link">Sign Up</a> to post your tweets.
+  </h5>
+  <div>TODO: Tweet form</div>
+  <app-loading-error-handler
+    [loading]="userTweetsLoading"
+    [error]="userTweetsError"
+  ></app-loading-error-handler>
+  <app-tweet *ngFor="let tweet of userTweets" [tweet]="tweet"></app-tweet>
+  <app-retry-button [show]="!!tweetsError" (handleClick)="getUserTweets()"></app-retry-button>
+</div>
