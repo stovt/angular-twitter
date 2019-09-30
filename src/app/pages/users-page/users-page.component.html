@@ -6,4 +6,5 @@
       <a routerLink="/users/{{ user.id }}">@{{ user.id }}</a>
     </li>
   </ul>
+  <app-retry-button [show]="!!error" (handleClick)="getAllUsers()"></app-retry-button>
 </div>

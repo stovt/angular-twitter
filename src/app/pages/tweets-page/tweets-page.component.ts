@@ -15,16 +15,17 @@ export class TweetsPageComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.getAllTweets();
+    this.apiService.allTweets$.subscribe(tweets => (this.tweets = tweets));
+    if (!this.tweets.length) {
+      this.getAllTweets();
+    }
   }
 
   getAllTweets(): void {
     this.loading = true;
+    this.error = null;
     this.apiService.getAllTweets().subscribe(
-      tweets => {
-        this.tweets = tweets;
-        this.loading = false;
-      },
+      () => (this.loading = false),
       error => {
         this.error = error;
         this.loading = false;

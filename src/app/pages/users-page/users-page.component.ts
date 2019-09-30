@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { ApiService } from '../../api/api.service';
 import { Users } from '../../types/user';
 
 @Component({
@@ -12,19 +12,20 @@ export class UsersPageComponent implements OnInit {
   error: string;
   users: Users = [];
 
-  constructor(private authService: AuthService) {}
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.getAllUsers();
+    this.apiService.allUsers$.subscribe(users => (this.users = users));
+    if (!this.users.length) {
+      this.getAllUsers();
+    }
   }
 
   getAllUsers(): void {
     this.loading = true;
-    this.authService.getAllUsers().subscribe(
-      users => {
-        this.users = users;
-        this.loading = false;
-      },
+    this.error = null;
+    this.apiService.getAllUsers().subscribe(
+      () => (this.loading = false),
       error => {
         this.error = error;
         this.loading = false;

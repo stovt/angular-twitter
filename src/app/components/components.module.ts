@@ -7,6 +7,7 @@ import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
 import { LoadingErrorHandlerComponent } from './loading-error-handler/loading-error-handler.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { RetryButtonComponent } from './retry-button/retry-button.component';
 import { TweetFormComponent } from './tweet-form/tweet-form.component';
 import { TweetComponent } from './tweet/tweet.component';
 
@@ -18,7 +19,8 @@ import { TweetComponent } from './tweet/tweet.component';
     CommentsComponent,
     TweetComponent,
     TweetFormComponent,
-    LoadingErrorHandlerComponent
+    LoadingErrorHandlerComponent,
+    RetryButtonComponent
   ],
   imports: [CommonModule, RouterModule],
   exports: [
@@ -28,7 +30,8 @@ import { TweetComponent } from './tweet/tweet.component';
     CommentsComponent,
     TweetComponent,
     TweetFormComponent,
-    LoadingErrorHandlerComponent
+    LoadingErrorHandlerComponent,
+    RetryButtonComponent
   ]
 })
 export class ComponentsModule {}
