@@ -1,4 +1,4 @@
 <div>
   <app-loading-error-handler [loading]="loading" [error]="error"></app-loading-error-handler>
-  <div>Tweets length: {{ tweets.length }}</div>
+  <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
 </div>
