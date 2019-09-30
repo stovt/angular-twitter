@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,6 +12,19 @@ const apiUrl = environment.apiUrl;
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
+
+  register(data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  }): Observable<{ success: boolean }> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.post<{ success: boolean }>(`${apiUrl}/auth/signup`, data, httpOptions);
+  }
 
   getAllUsers(): Observable<Users> {
     return this.http

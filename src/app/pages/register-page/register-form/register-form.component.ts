@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-register-form',
@@ -9,7 +11,10 @@ import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 export class RegisterFormComponent implements OnInit {
   formData: FormGroup;
 
-  constructor() {}
+  loading: boolean;
+  error: string;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.formData = new FormGroup({
@@ -28,7 +33,20 @@ export class RegisterFormComponent implements OnInit {
     password: string;
     confirmPassword: string;
   }) {
-    console.log(data);
+    this.loading = true;
+
+    const { firstName, lastName, email, password } = data;
+
+    this.authService.register({ firstName, lastName, email, password }).subscribe(
+      () => {
+        this.loading = false;
+        this.router.navigate(['/login'], { queryParams: { fromRegister: true } });
+      },
+      error => {
+        this.loading = false;
+        this.error = error;
+      }
+    );
   }
 
   private equalsTo(compareTo: string): ValidatorFn {

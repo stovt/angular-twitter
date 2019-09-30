@@ -1,4 +1,7 @@
 <div>
   <h2>Login</h2>
+  <div *ngIf="fromRegister" class="alert alert-success" role="alert">
+    Registration Successful. Please Login
+  </div>
   <app-login-form></app-login-form>
 </div>
