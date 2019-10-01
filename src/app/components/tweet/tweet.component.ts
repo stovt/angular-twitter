@@ -9,13 +9,29 @@ import { Tweet } from '../../types/tweet';
 export class TweetComponent implements OnInit {
   @Input() tweet: Tweet;
 
-  fullName: string;
-  date: string;
+  showComments = false;
 
   constructor() {}
 
-  ngOnInit() {
-    this.fullName = `${this.tweet.user.firstName} ${this.tweet.user.lastName}`;
-    this.date = formatDistanceToNow(new Date(this.tweet.createdAt));
+  ngOnInit() {}
+
+  toggleComments() {
+    this.showComments = !this.showComments;
+  }
+
+  likeTweet() {
+    alert('like tweet');
+  }
+
+  removeTweet() {
+    alert('remove tweet');
+  }
+
+  get fullName() {
+    return `${this.tweet.user.firstName} ${this.tweet.user.lastName}`;
+  }
+
+  get date() {
+    return formatDistanceToNow(new Date(this.tweet.createdAt));
   }
 }

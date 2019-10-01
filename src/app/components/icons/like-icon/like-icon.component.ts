@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-retry-button',
-  templateUrl: './retry-button.component.html',
-  styleUrls: ['./retry-button.component.css']
+  selector: 'app-like-icon',
+  templateUrl: './like-icon.component.html',
+  styleUrls: ['./like-icon.component.css']
 })
-export class RetryButtonComponent implements OnInit {
+export class LikeIconComponent implements OnInit {
+  @Input() liked: boolean;
+
   @Output() handleClick: EventEmitter<any> = new EventEmitter();
 
   constructor() {}

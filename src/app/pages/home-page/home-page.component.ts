@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit {
 
     if (this.user) {
       this.apiService.tweetsByUserId$.subscribe(
-        tweets => (this.userTweets = tweets[this.user.userId] || [])
+        tweets => (this.userTweets = tweets[this.user.id] || [])
       );
       if (!this.userTweets.length) {
         this.getUserTweets();
@@ -36,7 +36,7 @@ export class HomePageComponent implements OnInit {
       this.userTweetsLoading = true;
       this.userTweetsError = null;
 
-      this.apiService.getUserTweets(this.user.userId).subscribe(
+      this.apiService.getUserTweets(this.user.id).subscribe(
         () => (this.userTweetsLoading = false),
         error => {
           this.userTweetsError = error;

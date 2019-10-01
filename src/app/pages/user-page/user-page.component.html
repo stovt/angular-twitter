@@ -3,8 +3,8 @@
     [loading]="userLoading"
     [error]="userError"
   ></app-loading-error-handler>
-  <div class="mb-3">
-    <app-retry-button [show]="!!userError" (handleClick)="getUser()"></app-retry-button>
+  <div class="mb-3" *ngIf="!!userError">
+    <app-retry-button (handleClick)="getUser()"></app-retry-button>
   </div>
   <h4 *ngIf="user" class="mb-5">
     <b
@@ -17,5 +17,5 @@
     [error]="userTweetsError"
   ></app-loading-error-handler>
   <app-tweet *ngFor="let tweet of userTweets" [tweet]="tweet"></app-tweet>
-  <app-retry-button [show]="!!userTweetsError" (handleClick)="getUserTweets()"></app-retry-button>
+  <app-retry-button *ngIf="!!userTweetsError" (handleClick)="getUserTweets()"></app-retry-button>
 </div>

@@ -9,15 +9,17 @@
     </div>
     <div class="text-secondary">{{ date }}</div>
   </div>
-  <p class="mt-2" v-html="tweet.body"></p>
+  <p class="mt-2" [innerHTML]="tweet.body"></p>
   <div class="d-flex justify-content-between">
     <div class="d-flex align-items-center">
-      CommentIcon
+      <app-comment-icon (handleClick)="toggleComments()"></app-comment-icon
+      >{{ tweet.childrenAmount || '' }}
     </div>
     <div class="d-flex align-items-center">
-      LikeIcon
+      <app-like-icon [liked]="tweet.liked" (handleClick)="likeTweet()"></app-like-icon
+      >{{ tweet.likesCount }}
     </div>
-    TrashIcon
+    <app-trash-icon (handleClick)="removeTweet()"></app-trash-icon>
   </div>
   <hr />
 </div>

@@ -1,0 +1,13 @@
+.iconWrapper {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+.iconWrapper /deep/ svg {
+  cursor: pointer;
+  fill: currentcolor;
+}

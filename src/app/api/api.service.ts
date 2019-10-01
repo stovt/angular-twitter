@@ -106,7 +106,7 @@ export class ApiService {
   }
 
   tweet(message: string, parent?: number) {
-    const userId = this.authService.user ? this.authService.user.userId : null;
+    const userId = this.authService.user ? this.authService.user.id : null;
     return this.http
       .post<{ success: boolean; tweet: Tweet }>(
         `${apiUrl}/tweet/create`,

@@ -6,6 +6,10 @@ import { RouterModule } from '@angular/router';
 import { CommentFormComponent } from './comment-form/comment-form.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
+import { CommentIconComponent } from './icons/comment-icon/comment-icon.component';
+import { IconWrapperComponent } from './icons/icon-wrapper/icon-wrapper.component';
+import { LikeIconComponent } from './icons/like-icon/like-icon.component';
+import { TrashIconComponent } from './icons/trash-icon/trash-icon.component';
 import { LoadingErrorHandlerComponent } from './loading-error-handler/loading-error-handler.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RetryButtonComponent } from './retry-button/retry-button.component';
@@ -21,7 +25,11 @@ import { TweetComponent } from './tweet/tweet.component';
     TweetComponent,
     TweetFormComponent,
     LoadingErrorHandlerComponent,
-    RetryButtonComponent
+    RetryButtonComponent,
+    TrashIconComponent,
+    IconWrapperComponent,
+    LikeIconComponent,
+    CommentIconComponent
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   exports: [
@@ -32,7 +40,11 @@ import { TweetComponent } from './tweet/tweet.component';
     TweetComponent,
     TweetFormComponent,
     LoadingErrorHandlerComponent,
-    RetryButtonComponent
+    RetryButtonComponent,
+    TrashIconComponent,
+    IconWrapperComponent,
+    LikeIconComponent,
+    CommentIconComponent
   ]
 })
 export class ComponentsModule {}
