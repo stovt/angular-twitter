@@ -1,12 +1,19 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Tweets } from '../types/tweet';
+import { AuthService } from '../auth/auth.service';
+import { Tweet, Tweets } from '../types/tweet';
 import { User, Users } from '../types/user';
 
 const apiUrl = environment.apiUrl;
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +21,21 @@ const apiUrl = environment.apiUrl;
 export class ApiService {
   private readonly _allUsers = new BehaviorSubject<Users>([]);
   private readonly _usersById = new BehaviorSubject<{ [key: number]: User }>({});
-  private readonly _allTweets = new BehaviorSubject<Tweets>([]);
   private readonly _tweetsByUserId = new BehaviorSubject<{ [key: number]: Tweets }>({});
 
   readonly allUsers$ = this._allUsers.asObservable();
   readonly usersById$ = this._usersById.asObservable();
-  readonly allTweets$ = this._allTweets.asObservable();
-  readonly tweetsByUserId$ = this._tweetsByUserId.asObservable();
+  readonly tweetsByUserId$ = this._tweetsByUserId.asObservable().pipe(
+    map(tweets => {
+      const sortedTweetsByUserId = {};
+      for (const key of Object.keys(tweets)) {
+        sortedTweetsByUserId[key] = tweets[key].sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      }
+      return sortedTweetsByUserId;
+    })
+  );
 
   get allUsers(): Users {
     return this._allUsers.getValue();
@@ -36,13 +51,6 @@ export class ApiService {
     this._usersById.next(val);
   }
 
-  get allTweets(): Tweets {
-    return this._allTweets.getValue();
-  }
-  set allTweets(val: Tweets) {
-    this._allTweets.next(val);
-  }
-
   get tweetsByUserId(): { [key: number]: Tweets } {
     return this._tweetsByUserId.getValue();
   }
@@ -50,13 +58,14 @@ export class ApiService {
     this._tweetsByUserId.next(val);
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getAllTweets(): Observable<Tweets> {
     return this.http.get<{ success: boolean; tweets: Tweets }>(`${apiUrl}/tweet/get/all`).pipe(
       map(data => {
-        this.allTweets = data.tweets;
-        return data.tweets;
+        return data.tweets.sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       })
     );
   }
@@ -92,6 +101,37 @@ export class ApiService {
             [userId]: data.tweets
           };
           return data.tweets;
+        })
+      );
+  }
+
+  tweet(message: string, parent?: number) {
+    const userId = this.authService.user ? this.authService.user.userId : null;
+    return this.http
+      .post<{ success: boolean; tweet: Tweet }>(
+        `${apiUrl}/tweet/create`,
+        { message, parent },
+        httpOptions
+      )
+      .pipe(
+        map(data => {
+          const { tweet } = data;
+
+          if (userId) {
+            if (this.tweetsByUserId[userId]) {
+              this.tweetsByUserId = {
+                ...this.tweetsByUserId,
+                [userId]: [...this.tweetsByUserId[userId], tweet]
+              };
+            } else {
+              this.tweetsByUserId = {
+                ...this.tweetsByUserId,
+                [userId]: [tweet]
+              };
+            }
+          }
+
+          return data.tweet;
         })
       );
   }

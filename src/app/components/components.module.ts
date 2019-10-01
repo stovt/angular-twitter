@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { CommentFormComponent } from './comment-form/comment-form.component';
@@ -22,7 +23,7 @@ import { TweetComponent } from './tweet/tweet.component';
     LoadingErrorHandlerComponent,
     RetryButtonComponent
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   exports: [
     NavigationComponent,
     CommentComponent,
