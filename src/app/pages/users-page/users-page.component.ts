@@ -24,6 +24,7 @@ export class UsersPageComponent implements OnInit {
   getAllUsers(): void {
     this.loading = true;
     this.error = null;
+
     this.apiService.getAllUsers().subscribe(
       () => (this.loading = false),
       error => {

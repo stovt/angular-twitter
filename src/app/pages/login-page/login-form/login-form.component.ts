@@ -24,6 +24,7 @@ export class LoginFormComponent implements OnInit {
 
   onSubmit(data: { email: string; password: string }) {
     this.loading = true;
+    this.error = null;
 
     const { email, password } = data;
 

@@ -38,7 +38,7 @@ export class UserPageComponent implements OnInit {
     this.userLoading = true;
     this.userError = null;
 
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = +this.route.snapshot.paramMap.get('id');
 
     this.apiService.getUser(id).subscribe(
       () => (this.userLoading = false),
@@ -53,7 +53,7 @@ export class UserPageComponent implements OnInit {
     this.userTweetsLoading = true;
     this.userTweetsError = null;
 
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = +this.route.snapshot.paramMap.get('id');
 
     this.apiService.getUserTweets(id).subscribe(
       () => (this.userTweetsLoading = false),

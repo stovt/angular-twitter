@@ -23,6 +23,7 @@ export class TweetFormComponent implements OnInit {
 
   onSubmit(data: { message: string }) {
     this.loading = true;
+    this.error = null;
 
     const { message } = data;
 

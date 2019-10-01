@@ -79,7 +79,7 @@ export class ApiService {
     );
   }
 
-  getUser(id: string): Observable<User> {
+  getUser(id: number): Observable<User> {
     return this.http.get<{ success: boolean; user: User }>(`${apiUrl}/users/get/${id}`).pipe(
       map(data => {
         this.usersById = {
@@ -91,7 +91,7 @@ export class ApiService {
     );
   }
 
-  getUserTweets(userId: string) {
+  getUserTweets(userId: number) {
     return this.http
       .get<{ success: boolean; tweets: Tweets }>(`${apiUrl}/tweet/get/user/${userId}`)
       .pipe(
@@ -132,6 +132,47 @@ export class ApiService {
           }
 
           return data.tweet;
+        })
+      );
+  }
+
+  likeTweet(id: number) {
+    return this.http
+      .post<{ success: boolean; tweet: Tweet }>(`${apiUrl}/like/${id}`, undefined, httpOptions)
+      .pipe(
+        map(data => {
+          const { tweet } = data;
+
+          if (this.tweetsByUserId[tweet.userId]) {
+            this.tweetsByUserId = {
+              ...this.tweetsByUserId,
+              [tweet.userId]: [
+                ...this.tweetsByUserId[tweet.userId].filter(t => t.id !== tweet.id),
+                tweet
+              ]
+            };
+          }
+
+          return data.tweet;
+        })
+      );
+  }
+
+  removeTweet(id: number) {
+    return this.http
+      .post<{ success: boolean }>(`${apiUrl}/tweet/delete/${id}`, undefined, httpOptions)
+      .pipe(
+        map(data => {
+          if (this.authService.user && this.tweetsByUserId[this.authService.user.id]) {
+            this.tweetsByUserId = {
+              ...this.tweetsByUserId,
+              [this.authService.user.id]: [
+                ...this.tweetsByUserId[this.authService.user.id].filter(tweet => tweet.id !== id)
+              ]
+            };
+          }
+
+          return data;
         })
       );
   }

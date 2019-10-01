@@ -19,7 +19,16 @@
       <app-like-icon [liked]="tweet.liked" (handleClick)="likeTweet()"></app-like-icon
       >{{ tweet.likesCount }}
     </div>
-    <app-trash-icon (handleClick)="removeTweet()"></app-trash-icon>
+    <app-trash-icon *ngIf="canRemove" (handleClick)="removeTweet()"></app-trash-icon>
+  </div>
+  <app-loading-error-handler
+    [loading]="likeTweetLoading || removeTweetLoading"
+    [error]="likeTweetError || removeTweetError"
+  ></app-loading-error-handler>
+  <div *ngIf="showComments" class="ml-5">
+    <hr *ngIf="user" />
+    <app-comment-form *ngIf="user" [parent]="tweet.id"></app-comment-form>
+    <app-comments [parent]="tweet.id"></app-comments>
   </div>
   <hr />
 </div>

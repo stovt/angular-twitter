@@ -23,6 +23,7 @@ export class TweetsPageComponent implements OnInit {
   getAllTweets(): void {
     this.loading = true;
     this.error = null;
+
     this.apiService.getAllTweets().subscribe(
       tweets => {
         this.tweets = tweets;

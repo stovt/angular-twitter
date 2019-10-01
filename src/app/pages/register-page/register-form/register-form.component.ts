@@ -33,6 +33,7 @@ export class RegisterFormComponent implements OnInit {
     confirmPassword: string;
   }) {
     this.loading = true;
+    this.error = null;
 
     const { firstName, lastName, email, password } = data;
 

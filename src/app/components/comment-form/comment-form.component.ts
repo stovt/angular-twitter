@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-comment-form',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comment-form.component.css']
 })
 export class CommentFormComponent implements OnInit {
+  @Input() parent: number;
+
   constructor() {}
 
   ngOnInit() {}
