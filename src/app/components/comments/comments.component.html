@@ -1,3 +1,5 @@
-<p>
-  comments works!
-</p>
+<div>
+  <hr v-if="!user && !!comments.length" />
+  <app-loading-error-handler [loading]="loading" [error]="error"></app-loading-error-handler>
+  <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+</div>

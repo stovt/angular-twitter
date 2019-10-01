@@ -27,7 +27,7 @@ export class TweetFormComponent implements OnInit {
 
     const { message } = data;
 
-    this.apiService.tweet(message).subscribe(
+    this.apiService.tweet(message.replace(/\r?\n/g, '<br/>')).subscribe(
       () => {
         this.loading = false;
         this.formData.reset();

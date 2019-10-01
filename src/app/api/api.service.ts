@@ -22,6 +22,7 @@ export class ApiService {
   private readonly _allUsers = new BehaviorSubject<Users>([]);
   private readonly _usersById = new BehaviorSubject<{ [key: number]: User }>({});
   private readonly _tweetsByUserId = new BehaviorSubject<{ [key: number]: Tweets }>({});
+  private readonly _commentsByTweetId = new BehaviorSubject<{ [key: number]: Tweets }>({});
 
   readonly allUsers$ = this._allUsers.asObservable();
   readonly usersById$ = this._usersById.asObservable();
@@ -34,6 +35,17 @@ export class ApiService {
         );
       }
       return sortedTweetsByUserId;
+    })
+  );
+  readonly commentsByTweetId$ = this._commentsByTweetId.asObservable().pipe(
+    map(comments => {
+      const sortedCommentsByTweetId = {};
+      for (const key of Object.keys(comments)) {
+        sortedCommentsByTweetId[key] = comments[key].sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      }
+      return sortedCommentsByTweetId;
     })
   );
 
@@ -56,6 +68,13 @@ export class ApiService {
   }
   set tweetsByUserId(val: { [key: number]: Tweets }) {
     this._tweetsByUserId.next(val);
+  }
+
+  get commentsByTweetId(): { [key: number]: Tweets } {
+    return this._commentsByTweetId.getValue();
+  }
+  set commentsByTweetId(val: { [key: number]: Tweets }) {
+    this._commentsByTweetId.next(val);
   }
 
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -86,6 +105,7 @@ export class ApiService {
           ...this.usersById,
           [id]: data.user
         };
+
         return data.user;
       })
     );
@@ -100,6 +120,7 @@ export class ApiService {
             ...this.tweetsByUserId,
             [userId]: data.tweets
           };
+
           return data.tweets;
         })
       );
@@ -107,6 +128,7 @@ export class ApiService {
 
   tweet(message: string, parent?: number) {
     const userId = this.authService.user ? this.authService.user.id : null;
+
     return this.http
       .post<{ success: boolean; tweet: Tweet }>(
         `${apiUrl}/tweet/create`,
@@ -117,7 +139,21 @@ export class ApiService {
         map(data => {
           const { tweet } = data;
 
-          if (userId) {
+          if (parent) {
+            // comment
+            if (this.commentsByTweetId[parent]) {
+              this.commentsByTweetId = {
+                ...this.commentsByTweetId,
+                [parent]: [...this.commentsByTweetId[parent], tweet]
+              };
+            } else {
+              this.commentsByTweetId = {
+                ...this.commentsByTweetId,
+                [parent]: [tweet]
+              };
+            }
+          } else if (userId) {
+            // new tweet
             if (this.tweetsByUserId[userId]) {
               this.tweetsByUserId = {
                 ...this.tweetsByUserId,
@@ -173,6 +209,21 @@ export class ApiService {
           }
 
           return data;
+        })
+      );
+  }
+
+  getTweetComments(parent: number) {
+    return this.http
+      .get<{ success: boolean; tweets: Tweets }>(`${apiUrl}/tweet/get/parent/${parent}`)
+      .pipe(
+        map(data => {
+          this.commentsByTweetId = {
+            ...this.commentsByTweetId,
+            [parent]: data.tweets
+          };
+
+          return data.tweets;
         })
       );
   }

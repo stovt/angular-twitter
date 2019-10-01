@@ -6,5 +6,5 @@
       <a routerLink="/users/{{ user.id }}">@{{ user.id }}</a>
     </li>
   </ul>
-  <app-retry-button *ngIf="!!userError" (handleClick)="getAllUsers()"></app-retry-button>
+  <app-retry-button *ngIf="!!error" (handleClick)="getAllUsers()"></app-retry-button>
 </div>
