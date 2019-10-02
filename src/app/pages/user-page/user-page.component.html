@@ -1,0 +1,21 @@
+<div>
+  <app-loading-error-handler
+    [loading]="userLoading"
+    [error]="userError"
+  ></app-loading-error-handler>
+  <div class="mb-3" *ngIf="!!userError">
+    <app-retry-button (handleClick)="getUser()"></app-retry-button>
+  </div>
+  <h4 *ngIf="user" class="mb-5">
+    <b
+      >{{ user.firstName + ' ' + user.lastName }},
+      <a routerLink="/users/{{ user.id }}">@{{ user.id }}</a></b
+    >
+  </h4>
+  <app-loading-error-handler
+    [loading]="userTweetsLoading"
+    [error]="userTweetsError"
+  ></app-loading-error-handler>
+  <app-tweet *ngFor="let tweet of userTweets" [tweet]="tweet"></app-tweet>
+  <app-retry-button *ngIf="!!userTweetsError" (handleClick)="getUserTweets()"></app-retry-button>
+</div>

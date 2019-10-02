@@ -1,0 +1,5 @@
+<div>
+  <app-loading-error-handler [loading]="loading" [error]="error"></app-loading-error-handler>
+  <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+  <app-retry-button *ngIf="!!error" (handleClick)="getAllTweets()"></app-retry-button>
+</div>

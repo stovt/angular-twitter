@@ -1,0 +1,151 @@
+<div>
+  <app-loading-error-handler [error]="error"></app-loading-error-handler>
+  <form [formGroup]="formData" (ngSubmit)="onSubmit(formData.value)">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        type="firstName"
+        name="firstName"
+        formControlName="firstName"
+        class="form-control"
+        [class.is-invalid]="
+          formData.get('firstName').invalid &&
+          (formData.get('firstName').touched || formData.get('firstName').dirty)
+        "
+      />
+      <div
+        *ngIf="
+          formData.get('firstName').hasError('required') &&
+          (formData.get('firstName').touched || formData.get('firstName').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The firstName field is required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        type="lastName"
+        name="lastName"
+        formControlName="lastName"
+        class="form-control"
+        [class.is-invalid]="
+          formData.get('lastName').invalid &&
+          (formData.get('lastName').touched || formData.get('lastName').dirty)
+        "
+      />
+      <div
+        *ngIf="
+          formData.get('lastName').hasError('required') &&
+          (formData.get('lastName').touched || formData.get('lastName').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The lastName field is required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        name="email"
+        formControlName="email"
+        class="form-control"
+        [class.is-invalid]="
+          formData.get('email').invalid &&
+          (formData.get('email').touched || formData.get('email').dirty)
+        "
+      />
+      <div
+        *ngIf="
+          formData.get('email').hasError('required') &&
+          (formData.get('email').touched || formData.get('email').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The email field is required
+      </div>
+      <div
+        *ngIf="
+          formData.get('email').hasError('email') &&
+          (formData.get('email').touched || formData.get('email').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The email field must be a valid email
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        formControlName="password"
+        class="form-control"
+        [class.is-invalid]="
+          formData.get('password').invalid &&
+          (formData.get('password').touched || formData.get('password').dirty)
+        "
+      />
+      <div
+        *ngIf="
+          formData.get('password').hasError('required') &&
+          (formData.get('password').touched || formData.get('password').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The password field is required
+      </div>
+      <div
+        *ngIf="
+          formData.get('password').hasError('minlength') &&
+          (formData.get('password').touched || formData.get('password').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The password field must be at least
+        {{ formData.get('password').getError('minlength').requiredLength }} characters
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Password</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        formControlName="confirmPassword"
+        class="form-control"
+        [class.is-invalid]="
+          formData.get('confirmPassword').invalid &&
+          (formData.get('confirmPassword').touched || formData.get('confirmPassword').dirty)
+        "
+      />
+      <div
+        *ngIf="
+          formData.get('confirmPassword').hasError('required') &&
+          (formData.get('confirmPassword').touched || formData.get('confirmPassword').dirty)
+        "
+        class="invalid-feedback"
+      >
+        The confirmPassword field is required
+      </div>
+      <div
+        *ngIf="
+          formData.get('confirmPassword').hasError('notEquals') &&
+          (formData.get('confirmPassword').touched || formData.get('confirmPassword').dirty)
+        "
+        class="invalid-feedback"
+      >
+        Passwords should match
+      </div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" [disabled]="formData.invalid || loading">Register</button>
+      <img
+        *ngIf="loading"
+        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+      />
+      <a routerLink="/login" class="btn btn-link">Login</a>
+    </div>
+  </form>
+</div>

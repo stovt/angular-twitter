@@ -1,0 +1,34 @@
+<div>
+  <div class="d-flex justify-content-between">
+    <div>
+      <span class="font-weight-bold">{{ fullName }}</span
+      >{{ ' ' }}
+      <a routerLink="/users/{{ tweet.userId }}" class="btn-link .text-secondary"
+        >@{{ tweet.userId }}</a
+      >
+    </div>
+    <div class="text-secondary">{{ date }}</div>
+  </div>
+  <p class="mt-2" [innerHTML]="tweet.body"></p>
+  <div class="d-flex justify-content-between">
+    <div class="d-flex align-items-center">
+      <app-comment-icon (handleClick)="toggleComments()"></app-comment-icon
+      >{{ tweet.childrenAmount || '' }}
+    </div>
+    <div class="d-flex align-items-center">
+      <app-like-icon [liked]="tweet.liked" (handleClick)="likeTweet()"></app-like-icon
+      >{{ tweet.likesCount }}
+    </div>
+    <app-trash-icon *ngIf="canRemove" (handleClick)="removeTweet()"></app-trash-icon>
+  </div>
+  <app-loading-error-handler
+    [loading]="likeTweetLoading || removeTweetLoading"
+    [error]="likeTweetError || removeTweetError"
+  ></app-loading-error-handler>
+  <div *ngIf="showComments" class="ml-5">
+    <hr *ngIf="user" />
+    <app-comment-form *ngIf="user" [parent]="tweet.id"></app-comment-form>
+    <app-comments [parent]="tweet.id"></app-comments>
+  </div>
+  <hr />
+</div>

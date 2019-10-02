@@ -1,0 +1,10 @@
+<div>
+  <app-loading-error-handler [loading]="loading" [error]="error"></app-loading-error-handler>
+  <ul class="list-group">
+    <li *ngFor="let user of users" class="list-group-item">
+      <div>{{ user.firstName + ' ' + user.lastName }}</div>
+      <a routerLink="/users/{{ user.id }}">@{{ user.id }}</a>
+    </li>
+  </ul>
+  <app-retry-button *ngIf="!!error" (handleClick)="getAllUsers()"></app-retry-button>
+</div>
